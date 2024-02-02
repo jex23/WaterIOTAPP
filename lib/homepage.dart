@@ -8,6 +8,12 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     User? user = _auth.currentUser;
 
+    // Extract the part of the email before '@' and remove numbers
+    String emailPrefix = user?.email?.split('@').first.replaceAll(RegExp(r'[0-9]'), '') ?? '';
+
+    // Capitalize the first letter
+    String capitalizedPrefix = emailPrefix.isNotEmpty ? emailPrefix[0].toUpperCase() + emailPrefix.substring(1) : '';
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Home Page'),
@@ -16,7 +22,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Welcome, ${user?.email}'),
+            Text('Welcome, $capitalizedPrefix'),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
